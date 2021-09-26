@@ -199,13 +199,13 @@ int main()
             } else {
                 SKNF = SKNF + "+!z";
             }
-            SKNF = SKNF + ")+(";
+            SKNF = SKNF + ")(";
 
         }
 
     }
     SDNF = SDNF.substr(0, SDNF.size() - 2);
-    SKNF = SKNF.substr(0, SKNF.size() - 2);
+    SKNF = SKNF.substr(0, SKNF.size() - 1);
     cout << "СДНФ: " << SDNF << endl;
     cout << "СКНФ: " << SKNF << endl;
     P_J();
