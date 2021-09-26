@@ -29,36 +29,24 @@ bool akon(bool a, bool b)
 {
     return (!(a && b));
 }//антиконъюнкция
-bool f1(bool x, bool y)
+bool f1(bool x, bool y, bool z)
 {
-    bool l = (eqv(x,!y))||(adiz(y,x)); //вводимаая функция
+    bool l = x&&(mod(y,z)); //вводимаая функция
     return l;
 }
 bool f2(bool x, bool y, bool z)
 {
-    bool l = mod((!(imp(x,!(y))&&!(z))),(!(x&&y))); //вводимаая функция
+    bool l = mod((x&&y),(x&&z)); //вводимаая функция
     return l;
 }
 
 int main()
 {
-    bool x, y, z;
-    cout << setw(3) << "x" << setw(3) << "y"<< setw(3) << "f1" << setw(3) << endl;
-    for (int i = 0; i < 4; i++) {
-        if (i < 2) {
-            x = 0;
-        } else {
-            x = 1;
-        }
-        if (i % 2) {
-            y = 1;
-        } else {
-            y = 0;
-        }
-        cout << setw(3) << x << setw(3) << y << setw(3) << f1(x, y) << endl;
-    }
+    string SDNF1 = "(";
+    string SDNF2 = "(";
+    bool x, y, z, fun, fun1;
     cout << endl;
-    cout << setw(3) << "x" << setw(3) << "y" << setw(3) << "z" << setw(3) << "f2";
+    cout << setw(3) << "x" << setw(3) << "y"<< setw(3)<< "z" << setw(3) << "f1" << setw(3) << "f2" << setw(3) << endl;
     cout << endl;
     for (int i = 0; i < 8; i++) {
         if (i < 4) {
@@ -76,7 +64,67 @@ int main()
         } else {
             z = 0;
         }
-        cout << setw(3) << x << setw(3) << y << setw(3) << z << setw(3) << f2(x, y, z) << endl;
+        cout << setw(3) << x << setw(3) << y << setw(3) << z << setw(3) << f1(x, y, z) << setw(3) << f2(x, y, z) << setw(3) << endl;
+        fun = f1(x, y, z);
+        fun1 = f2(x, y, z);
+        if (fun == 1) {
+
+            if (x == 1) {
+                SDNF1 = SDNF1 + "x";
+            } else {
+                SDNF1 = SDNF1 + "!x";
+            }
+            if (y == 1) {
+                SDNF1 = SDNF1 + "y";
+            } else {
+                SDNF1 = SDNF1 + "!y";
+            }
+            if (z == 1) {
+                SDNF1 = SDNF1 + "z";
+            } else {
+                SDNF1 = SDNF1 + "!z";
+            }
+
+            SDNF1 = SDNF1 + ")+(";
+
+        }
+        if (fun1 == 1) {
+
+            if (x == 1) {
+                SDNF2 = SDNF2 + "x";
+            } else {
+                SDNF2 = SDNF2 + "!x";
+            }
+            if (y == 1) {
+                SDNF2 = SDNF2 + "y";
+            } else {
+                SDNF2 = SDNF2 + "!y";
+            }
+            if (z == 1) {
+                SDNF2 = SDNF2 + "z";
+            } else {
+                SDNF2 = SDNF2 + "!z";
+            }
+
+            SDNF2 = SDNF2 + ")+(";
+
+        }
+        if (f1(x, y, z) != f2(x, y, z)) {
+            cout << " Вывод: f1 не эквивалентна f2" << endl;
+            break;
+
+        } else {
+            if (i == 7) {
+                cout << "Вывод: f1 эквивалентна f2" << endl;
+            }
+            continue;
+        }
+
+
     }
+    SDNF1 = SDNF1.substr(0, SDNF1.size() - 2);
+    SDNF2 = SDNF2.substr(0, SDNF2.size() - 2);
+    cout << "SDNF1: " << SDNF1 << endl;
+    cout << "SDNF2: " << SDNF2 << endl;
     return 0;
 }
